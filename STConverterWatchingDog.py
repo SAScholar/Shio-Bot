@@ -1,8 +1,8 @@
 import requests
 import asyncio
 import time
-from opencc import OpenCC
 import re
+from opencc import OpenCC
 from mwbot import Bot
 
 stconverter = OpenCC('s2t.json')
