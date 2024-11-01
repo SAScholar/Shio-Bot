@@ -8,18 +8,22 @@ from mwbot import Bot
 stconverter = OpenCC('s2t.json')
 tsconverter = OpenCC('t2s.json')
 
-queryAPI = 'https://zh.wikipedia.org/w/api.php?action=query&format=json&list=recentchanges&formatversion=2&rctag=mw-changed-redirect-target&rcprop=title%7Ctimestamp%7Cloginfo%7Cids'
-querySent = requests.get(queryAPI)
-queryJson = querySent.json()
-getQueryLen = len(queryJson["query"]["recentchanges"])
-QueryLen = range(getQueryLen)
 revids = []
 title = []
 edited = []
 
-for x in QueryLen:
-    revids.append(queryJson["query"]["recentchanges"][x]["revid"])
-    title.append(queryJson["query"]["recentchanges"][x]["title"])
+def getTitleList():
+    queryAPI = 'https://zh.wikipedia.org/w/api.php?action=query&format=json&list=recentchanges&formatversion=2&rctag=mw-changed-redirect-target&rcprop=title%7Ctimestamp%7Cloginfo%7Cids'
+    querySent = requests.get(queryAPI)
+    queryJson = querySent.json()
+    getQueryLen = len(queryJson["query"]["recentchanges"])
+    QueryLen = range(getQueryLen)
+    for x in QueryLen:
+        if queryJson["query"]["recentchanges"][x]["title"] in title:
+            continue
+        else:
+            revids.append(queryJson["query"]["recentchanges"][x]["revid"])
+            title.append(queryJson["query"]["recentchanges"][x]["title"])
 
 def getRevText(revid) -> str:
     api = f'https://zh.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&revids={revid}&formatversion=2&rvprop=ids%7Ccontent'
@@ -81,7 +85,6 @@ async def main():
                 return
  
 while True:
+    getTitleList()
     asyncio.run(main())
     time.sleep(10)
-
-
