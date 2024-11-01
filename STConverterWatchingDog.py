@@ -1,8 +1,8 @@
 import requests
 import asyncio
 import time
-from opencc import OpenCC
 import re
+from opencc import OpenCC
 from mwbot import Bot
 
 stconverter = OpenCC('s2t.json')
@@ -30,7 +30,7 @@ def getRevText(revid) -> str:
     sent = requests.get(api)
     json = sent.json()
     text = json['query']['pages'][0]['revisions'][0]['content']
-    pattern = r'#(?:REDIRECT|重定向|重新導向)\s*\[\[(.*?)\]\]'
+    pattern = r'#(?:REDIRECT|redirect|重定向|重新導向)\s*\[\[(.*?)\]\]'
     matches = re.findall(pattern, text)
     return matches[0]
 
