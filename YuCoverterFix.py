@@ -42,17 +42,18 @@ async def main():
             matches = re.findall(pattern, title)
             usingTitle = matches[0]
             trad = stconverter.convert(usingTitle)
-            edit1 = "{{Noteta|zh-hans:{simple};zh-hant:{traditional;}}".format(simple=usingTitle, traditional=trad)
+            edit1 = "{{Noteta|zh-hans:{simple};zh-hant:{traditional};}}".format(simple=usingTitle, traditional=trad)
             edit = edit1 + page.text
             await bot.edit(title, edit, summary="Bot: 修正标题")
+            print(Title + "：" + usingTitle + "Done!")
         else:
             pattern = r"于([^()]*?)(\s*\(.*?\))?([^()]*?)"
             matches = re.findall(pattern, title)
             usingTitle = matches[0]
             simple = stconverter.convert(usingTitle)
-            edit1 = "{{Noteta|zh-hans:{simple};zh-hant:{traditional;}}".format(traditional=usingTitle, simple=simple)
+            edit1 = "{{Noteta|zh-hans:{simple};zh-hant:{traditional};}}".format(traditional=usingTitle, simple=simple)
             edit = edit1 + page.text
             await bot.edit(title, edit, summary="Bot: 修正标题")      
-            
+            print(Title + "：" + usingTitle + "Done!")
     print("Done!")
       
