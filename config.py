@@ -1,0 +1,5 @@
+sitename = "zh.wikipedia"
+api = "https://zh.wikipedia.org/w/api.php"
+index = "https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5"
+username = ""
+password = ""
